@@ -1,5 +1,6 @@
 from synology_drive_api.drive import SynologyDrive
 import json
+import csv
 
 def jprint(obj):
     # create a formatted string of the Python JSON object
@@ -16,24 +17,28 @@ NAS_USER = 'cjupp'
 NAS_PASS = 'ZJcj4GBSF9Frr9KCmGxy'
 
 prod_sheet = 'Production_Record_Testbench.osheet'
-file_path = '/team-folders/cjupp/Projects/Serial Number Tool'
+file_path = '/team-folders/cjupp/Projects/Serial Number Tool/'
 
 
 # Use specified port
 with SynologyDrive(NAS_USER, NAS_PASS, NAS_IP, NAS_PORT) as synd:
-    print(synd.get_teamfolder_info())
+    #print(synd.get_teamfolder_info())
 
-    print(synd.list_folder('/team-folders/cjupp'))
+    #print(synd.list_folder('/team-folders/cjupp'))
 
-    print(synd.get_file_or_folder_info('701208765814317115'))
+    #print(synd.get_file_or_folder_info('701208765814317115'))
 
     #print()
     #print()
 
-    """bio = synd.download_file(f'/mydrive/{prod_sheet}')
-    with open(prod_sheet, 'wb') as f:
-        f.write(bio)
-    pass"""
+
+    # dowloand odoc as docx
+    bio = synd.download_synology_office_file(file_path + prod_sheet)
+    with open('test.csv', 'wb') as f:
+        f.write(bio.read())
+
+pass
+
 
 
 # get single label info
