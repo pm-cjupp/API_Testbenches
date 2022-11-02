@@ -31,11 +31,19 @@ with SynologyDrive(NAS_USER, NAS_PASS, NAS_IP, NAS_PORT) as synd:
     #print()
     #print()
 
+    prod_ss = 'ProductionScreenshot.xlsx'
 
     # dowloand odoc as docx
+    # Currently takes 19 seconds
     bio = synd.download_synology_office_file(file_path + prod_sheet)
-    with open('test.csv', 'wb') as f:
+    with open(prod_ss, 'wb') as f:
         f.write(bio.read())
+
+
+    #Reupload as osheets
+    # Currently takes 4 seconds
+    with open(prod_ss, 'rb') as file:
+        synd.upload_file(file, file_path)
 
 pass
 
